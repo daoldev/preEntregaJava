@@ -1,0 +1,8 @@
+{
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.format.settings.url": ".vscode/java-formatter.xml",
+    "java.project.sourcePaths": [
+        "clase02"
+    ],
+    "java.project.referencedLibraries": []
+}
