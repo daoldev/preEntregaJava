@@ -34,10 +34,10 @@ public class App {
                     consultarArticulo(scanner, articulos);
                     break;
                 case 4:
-                    modificarArticulo(scanner, articulos);
+                    //modificarArticulo(scanner, articulos);
                     break;
                 case 5:
-                    eliminarArticulo(scanner, articulos);
+                    //eliminarArticulo(scanner, articulos);
                     break;
                 case 0:
                     System.out.println("Saliendo del sistema...");
@@ -72,22 +72,23 @@ public class App {
         }
 
         String nombre = leerTextoNoVacio(s, "Ingrese el nombre del articulo:");
-        double precio = leerDouble(s, "Ingrese el precio del articulo:");
+        double precio = leerDoubleNoNegativo(s, "Ingrese el precio del articulo:");
 
         Articulo articulo = new Articulo(codigo, nombre, precio);
-        
+
         articulos.add(articulo);
         System.out.println("Articulo agregado correctamente.");
     }
 
+
     public static void listarArticulos(ArrayList<Articulo> articulos) {
         if (articulos.isEmpty()) {
-            System.out.println("No hay articulos registrados.");
-        } else {
-            System.out.println("Lista de articulos:");
-            for (int i = 0; i < articulos.size(); i++) {
-                System.out.println((i + 1) + ". " + articulos.get(i));
-            }
+            System.out.println("No hay articulos cargados.");
+        } 
+        System.out.println("Lista de articulos");
+        for (Articulo articulo : articulos) {
+            System.out.println(articulo.getCodigo() + " - " + articulo.getNombre() + " - $" + articulo.getPrecio());
+
         }
     }
 
@@ -135,13 +136,36 @@ public class App {
             System.out.println("El campo no puede estar vacío.");
         }
     }
-
+    private static double leerDoubleNoNegativo(Scanner s, String string) {
+        while (true) {
+            System.out.print(string);
+            try {
+                double valor = Double.parseDouble(s.nextLine());
+                if (valor >= 0) {
+                    return valor;
+                } else {
+                    System.out.println("El valor no puede ser negativo.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Por favor, ingrese un número válido.");
+            }
+        }
+    }
     public static boolean existeArticulo(ArrayList<String> articulos, String descripcion) {
         return articulos.contains(descripcion);
     }
 
     public static int buscarPosicionArticulo(ArrayList<String> articulos, String descripcion) {
         return articulos.indexOf(descripcion);
+    }
+
+    public static Articulo buscarArticuloPorCodigo(ArrayList<Articulo> articulos, int codigo) {
+        for (Articulo articulo : articulos) {
+            if (articulo.getCodigo() == codigo) {
+                return articulo;
+            }
+        }
+        return null;
     }
 
 
